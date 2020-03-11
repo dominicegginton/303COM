@@ -1,0 +1,38 @@
+{
+  "name": "303com",
+  "version": "0.0.0",
+  "description": "A smart home security system 🔒🎥",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:watch": "nodemon index.js",
+    "test": "jest . --coverage",
+    "linter": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.coventry.ac.uk/eggintod/303COM.git"
+  },
+  "author": "Dominic Egginton",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^25.1.0",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "koa": "^2.11.0",
+    "koa-icon": "^1.1.0",
+    "koa-logger": "^3.2.1",
+    "koa-session": "^5.13.1",
+    "koa-views": "^6.2.1",
+    "pug": "^2.0.4"
+  }
+}
