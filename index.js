@@ -10,7 +10,12 @@ const bodyParser = require('koa-bodyparser')
 
 /* IMPORT MODULES */
 const http = require('http')
+const MongoClient = require('mongodb').MongoClient
 const logger = require('./modules/logger')
+
+/* GLOBAL VARS */
+const DATABASE_URL = 'localhost' || process.env.DATABASE_URL
+const DATABASE_PORT = 27017 || process.env.DATABASE_PORT
 
 /* SETUP KOA */
 const app = new Koa()
@@ -28,6 +33,13 @@ app.use(bodyParser())
 
 /* SETUP LOGGER */
 app.context.logger = logger;
+
+/* SETUP DATABASE CONNECTION */
+(async () => {
+  const client = await MongoClient.connect(`mongodb://${DATABASE_URL}:${DATABASE_PORT}/`, { useUnifiedTopology: true })
+  app.context.logger.info('>> Server connected to database')
+  app.context.db = client.db('303COM')
+})()
 
 
 /* SETUP PORT */
