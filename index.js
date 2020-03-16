@@ -10,6 +10,7 @@ const bodyParser = require('koa-bodyparser')
 
 /* IMPORT MODULES */
 const http = require('http')
+const logger = require('./modules/logger')
 
 /* SETUP KOA */
 const app = new Koa()
@@ -24,6 +25,10 @@ app.use(session({
   renew: true
 }, app))
 app.use(bodyParser())
+
+/* SETUP LOGGER */
+app.context.logger = logger;
+
 
 /* SETUP PORT */
 const defaultPort = 3000
