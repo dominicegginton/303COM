@@ -23,16 +23,22 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.1.0",
+    "mongodb-memory-server": "^6.3.3",
     "nodemon": "^2.0.2",
     "supertest": "^4.0.2"
   },
   "dependencies": {
+    "@koa/router": "^8.0.8",
+    "bcrypt": "^4.0.1",
     "fs-extra": "^8.1.0",
     "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
     "koa-icon": "^1.1.0",
-    "koa-logger": "^3.2.1",
+    "koa-sassy": "^0.1.0",
     "koa-session": "^5.13.1",
     "koa-views": "^6.2.1",
-    "pug": "^2.0.4"
+    "mongodb": "^3.5.5",
+    "pug": "^2.0.4",
+    "winston": "^3.2.1"
   }
 }
