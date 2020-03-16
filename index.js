@@ -13,6 +13,9 @@ const http = require('http')
 const MongoClient = require('mongodb').MongoClient
 const logger = require('./modules/logger')
 
+/* IMPORT ROUTERS */
+const homeRouter = require('./routes/home')
+
 /* GLOBAL VARS */
 const DATABASE_URL = 'localhost' || process.env.DATABASE_URL
 const DATABASE_PORT = 27017 || process.env.DATABASE_PORT
@@ -41,6 +44,9 @@ app.context.logger = logger;
   app.context.db = client.db('303COM')
 })()
 
+/* SETUP ROUTERS */
+app.use(homeRouter.routes())
+app.use(homeRouter.allowedMethods())
 
 /* SETUP PORT */
 const defaultPort = 3000
