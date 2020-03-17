@@ -1,0 +1,65 @@
+'use strict'
+
+/* IMPORT TEST */
+const Admin = require('../admin')
+
+/* IMPORT MODULES */
+const MongoClient = require('mongodb').MongoClient
+const MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer
+const bcrypt = require('bcrypt')
+
+beforeEach(async () => {
+  this.mongoMemoryServer = new MongoMemoryServer()
+  const uri = await this.mongoMemoryServer.getUri()
+
+  this.client = await MongoClient.connect(uri, { useUnifiedTopology: true })
+  this.db = this.client.db('TEST')
+})
+
+afterEach(async () => {
+  this.client.close()
+  this.mongoMemoryServer.stop()
+})
+
+describe('Admin', () => {
+  describe('constructor()', () => {
+    describe('db', () => {
+      test('should throw error when null', async () => {
+        expect((async () => { await new Admin() })()).rejects.toThrow(new Error('db should be mongodb db object'))
+      })
+
+      test('should throw error when db is not type of mongodb db object', async () => {
+        expect((async () => { await new Admin() })()).rejects.toThrow(new Error('db should be mongodb db object'))
+      })
+
+      test('should not throw error when db is type of mongodb db object', async () => {
+        expect((async () => { await new Admin(this.db) })()).resolves.not.toThrow()
+      })
+
+      test('should return type object', async () => {
+        const admin = await new Admin(this.db)
+        expect(typeof admin).toBe('object')
+      })
+
+      test('should create admin document in admin collection', async () => {
+        await new Admin(this.db)
+        expect(await this.db.collection('admin').countDocuments()).toBe(1)
+      })
+
+      test('should not create duplicate admin document in admin collection', async () => {
+        await new Admin(this.db)
+        expect(await this.db.collection('admin').countDocuments()).toBe(1)
+        await new Admin(this.db)
+        expect(await this.db.collection('admin').countDocuments()).toBe(1)
+      })
+
+      test('should create admin document with default password', async () => {
+        await new Admin(this.db)
+        expect(await this.db.collection('admin').countDocuments()).toBe(1)
+        const data = await this.db.collection('admin').find({}).toArray()
+        const adminAccount = data[0]
+        expect(await bcrypt.compare('password', adminAccount.password)).toBe(true)
+      })
+    })
+  })
+})
