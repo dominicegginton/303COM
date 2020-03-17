@@ -26,6 +26,15 @@ class Admin {
     })()
   }
 
+  async login (password) {
+    if (!password) throw new Error('password can not be empty')
+    if (typeof password !== 'string') throw new Error('password must be type string')
+    const data = await this.collection.find({ name: 'admin' }).toArray()
+    const admin = data[0]
+    if (!await bcrypt.compare(password, admin.password)) throw new Error('Invalid Password')
+    else return admin._id.toHexString()
+  }
+
   async exists () {
     if (await this.collection.countDocuments() > 0) return true
     else return false

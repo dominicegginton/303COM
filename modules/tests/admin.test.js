@@ -25,15 +25,15 @@ describe('Admin', () => {
   describe('constructor()', () => {
     describe('db', () => {
       test('should throw error when null', async () => {
-        expect((async () => { await new Admin() })()).rejects.toThrow(new Error('db should be mongodb db object'))
+        expect(new Admin()).rejects.toThrow(new Error('db should be mongodb db object'))
       })
 
       test('should throw error when db is not type of mongodb db object', async () => {
-        expect((async () => { await new Admin() })()).rejects.toThrow(new Error('db should be mongodb db object'))
+        expect(new Admin()).rejects.toThrow(new Error('db should be mongodb db object'))
       })
 
       test('should not throw error when db is type of mongodb db object', async () => {
-        expect((async () => { await new Admin(this.db) })()).resolves.not.toThrow()
+        expect(new Admin(this.db)).resolves.not.toThrow()
       })
 
       test('should return type object', async () => {
@@ -60,6 +60,39 @@ describe('Admin', () => {
         const adminAccount = data[0]
         expect(await bcrypt.compare('password', adminAccount.password)).toBe(true)
       })
+    })
+  })
+
+  describe('login()', () => {
+    describe('arguments', () => {
+      describe('password', () => {
+        test('should throw error when password is null', async () => {
+          const admin = await new Admin(this.db)
+          expect(admin.login()).rejects.toThrow(new Error('password can not be empty'))
+        })
+
+        test('should throw error when password is not type string', async () => {
+          const admin = await new Admin(this.db)
+          expect(admin.login(2)).rejects.toThrow(new Error('password must be type string'))
+        })
+
+        test('should accept password of type string', async () => {
+          const admin = await new Admin(this.db)
+          expect(admin.login('password')).resolves.not.toThrow()
+        })
+      })
+    })
+
+    test('should return admin id when password matches', async () => {
+      const admin = await new Admin(this.db)
+      const adminId = await admin.login('password')
+      expect(typeof adminId).toBe('string')
+      expect(adminId.length).toBe(24)
+    })
+
+    test('should throw error when password is invalid', async () => {
+      const admin = await new Admin(this.db)
+      expect(admin.login('invalid')).rejects.toThrow(new Error('Invalid Password'))
     })
   })
 })
