@@ -1,0 +1,37 @@
+@import includes/vars
+@import includes/text
+
+html
+  zoom: 100%
+  background: $background-light
+  @media (prefers-color-scheme: dark)
+    background:  $background-dark
+
+body
+  margin: 0 0 100 0
+
+main
+  display: block
+  width: 100%
+  max-width: $page_width
+  margin: 0 0 0 0
+  position: relative
+  left: 50%
+  transform: translateX(-50%)
+  @media screen and (max-width: $page_width + 80)
+    left: unset
+    transform: unset
+    margin: 0 0 0 0
+    max-width: $page_width - 100
+    padding: 0 50 0 50
+    min-width: unset
+    width: unset
+
+.login
+  position: relitive
+  display: inline-block
+  margin: 0 0 0 0
+  width: 100%
+
+.error
+	margin: 40 0 0 0
