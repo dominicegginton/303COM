@@ -15,6 +15,7 @@ const logger = require('./modules/logger')
 
 /* IMPORT ROUTERS */
 const homeRouter = require('./routes/home')
+const authenticationRouter = require('./routes/authentication')
 
 /* GLOBAL VARS */
 const DATABASE_URL = 'localhost' || process.env.DATABASE_URL
@@ -47,6 +48,8 @@ app.context.logger = logger;
 /* SETUP ROUTERS */
 app.use(homeRouter.routes())
 app.use(homeRouter.allowedMethods())
+app.use(authenticationRouter.routes())
+app.use(authenticationRouter.allowedMethods())
 
 /* SETUP PORT */
 const defaultPort = 3000
