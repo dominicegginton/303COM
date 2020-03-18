@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "start:watch": "NODE_ENV=development nodemon index.js",
-    "test": "NODE_ENV=test jest . --coverage",
+    "test": "NODE_ENV=test jest . --coverage --verbose",
     "linter": "eslint ."
   },
   "repository": {
