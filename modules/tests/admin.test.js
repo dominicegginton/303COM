@@ -9,6 +9,7 @@ const MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer
 const bcrypt = require('bcrypt')
 
 beforeEach(async () => {
+  jest.resetModules()
   this.mongoMemoryServer = new MongoMemoryServer()
   const uri = await this.mongoMemoryServer.getUri()
 
@@ -29,7 +30,7 @@ describe('Admin', () => {
       })
 
       test('should throw error when db is not type of mongodb db object', async () => {
-        expect(new Admin()).rejects.toThrow(new Error('db should be mongodb db object'))
+        expect(new Admin({})).rejects.toThrow(new Error('db should be mongodb db object'))
       })
 
       test('should not throw error when db is type of mongodb db object', async () => {
@@ -93,6 +94,57 @@ describe('Admin', () => {
     test('should throw error when password is invalid', async () => {
       const admin = await new Admin(this.db)
       expect(admin.login('invalid')).rejects.toThrow(new Error('Invalid Password'))
+    })
+  })
+
+  describe('updatePassword()', () => {
+    describe('arguments', () => {
+      describe('currentPassword', () => {
+        test('should throw error when null', async () => {
+          const admin = await new Admin(this.db)
+          expect(admin.updatePassword(null, 'newPassword')).rejects.toThrow(new Error('currentPassword can not be empty'))
+        })
+
+        test('should throw error when type is not string', async () => {
+          const admin = await new Admin(this.db)
+          expect(admin.updatePassword(9, 'newPassword')).rejects.toThrow(new Error('currentPassword must be type string'))
+        })
+
+        test('should accept string', async () => {
+          const admin = await new Admin(this.db)
+          expect(await admin.updatePassword('password', 'newPassword')).toBe(true)
+        })
+      })
+
+      describe('newPassword', () => {
+        test('should throw error when null', async () => {
+          const admin = await new Admin(this.db)
+          expect(admin.updatePassword('password', null)).rejects.toThrow(new Error('newPassword can not be empty'))
+        })
+
+        test('should throw error when type is not string', async () => {
+          const admin = await new Admin(this.db)
+          expect(admin.updatePassword('password', 9)).rejects.toThrow(new Error('newPassword must be type string'))
+        })
+
+        test('should accept string', async () => {
+          const admin = await new Admin(this.db)
+          expect(await admin.updatePassword('password', 'newPassword')).toBe(true)
+        })
+      })
+    })
+
+    test('should throw error if currentPassword is invalid', async () => {
+      const admin = await new Admin(this.db)
+      expect(admin.updatePassword('invalid', 'newPassword')).rejects.toThrow(new Error('Invalid Password'))
+    })
+
+    test('should update admin password if currentPassword is valid', async () => {
+      const admin = await new Admin(this.db)
+      await admin.updatePassword('password', 'newPassword')
+      const data = await this.db.collection('admin').find({}).toArray()
+      const adminAccount = data[0]
+      expect(await bcrypt.compare('newPassword', adminAccount.password)).toBe(true)
     })
   })
 })
