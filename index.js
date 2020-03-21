@@ -5,6 +5,7 @@ const Koa = require('koa')
 const favicon = require('koa-icon')
 const sassy = require('koa-sassy')
 const views = require('koa-views')
+const serve = require('koa-static')
 const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
 
@@ -29,6 +30,7 @@ app.keys = ['secure'] // TODO: Update this to improve security
 app.use(favicon('./assets/logo.png', { type: 'png' }))
 app.use(sassy('./sass'))
 app.use(views('./views', { extension: 'pug' }))
+app.use(serve('./public'))
 app.use(session({
   signed: true,
   rolling: true,
