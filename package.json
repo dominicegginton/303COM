@@ -41,6 +41,7 @@
     "mongodb": "^3.5.5",
     "opencv4nodejs": "^5.5.0",
     "pug": "^2.0.4",
+    "socket.io": "^2.3.0",
     "winston": "^3.2.1"
   }
 }
