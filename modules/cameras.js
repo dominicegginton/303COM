@@ -42,9 +42,9 @@ class Cameras {
   }
 
   async remove (id) {
-    if (!id) throw new Error('id can not be empty')
-    if (typeof id !== 'string') throw new Error('id must be type string')
-    const data = await this.collection.deleteOne({ _id: ObjectId(id) })
+    if (id instanceof !ObjectID) throw new Error('id must be type MongoDB ObjectId')
+    Cameras.streams = Cameras.streams.filter(stream => { return stream.id !== id })
+    const data = await this.collection.deleteOne({ _id: ObjectID(id) })
     if (data.result.n !== 1 || data.result.n !== 1) return false
     return true
   }
