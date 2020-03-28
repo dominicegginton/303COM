@@ -35,12 +35,6 @@ class Cameras {
     return data.insertedId
   }
 
-  async get () {
-    const data = await this.collection.find()
-    const cameraDocuments = await data.toArray()
-    return cameraDocuments
-  }
-
   async remove (id) {
     if (id instanceof !ObjectID) throw new Error('id must be type MongoDB ObjectId')
     Cameras.streams = Cameras.streams.filter(stream => { return stream.id !== id })
