@@ -18,6 +18,7 @@ const logger = require('./modules/logger')
 const homeRouter = require('./routes/home')
 const authenticationRouter = require('./routes/authentication')
 const settingsRouter = require('./routes/settings')
+const cameraRouter = require('./routes/camera')
 
 /* GLOBAL VARS */
 const DATABASE_URL = 'localhost' || process.env.DATABASE_URL
@@ -55,6 +56,8 @@ app.use(authenticationRouter.routes())
 app.use(authenticationRouter.allowedMethods())
 app.use(settingsRouter.routes())
 app.use(settingsRouter.allowedMethods())
+app.use(cameraRouter.routes())
+app.use(cameraRouter.allowedMethods())
 
 /* SETUP PORT */
 const defaultPort = 3000

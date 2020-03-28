@@ -1,0 +1,22 @@
+doctype html5
+html(lang='en')
+  include includes/head.pug
+  head
+    script(src = '/socket.io/socket.io.js')
+    link(rel="stylesheet", href="/camera.css")
+    link(rel="stylesheet" href="/controls.css")
+    title 303COM
+  body
+    main
+      h1=camera.name
+      .stream_container
+        img.stream(id=camera.id src='')
+      script.
+        const socket = io.connect('http://localhost:3000')
+        const id = !{JSON.stringify(camera.id)}
+        socket.on(`frame-data-${id}`, (data) => {
+          if (data.frame) {
+            const imgTag = document.getElementById(id)
+            imgTag.src = `data:image/jpeg;base64,${data.frame}`
+          }
+        })
