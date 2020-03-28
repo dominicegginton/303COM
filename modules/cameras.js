@@ -48,6 +48,13 @@ class Cameras {
     if (data.result.n !== 1 || data.result.n !== 1) return false
     return true
   }
+
+  async exists (address) {
+    if (!address) throw new Error('address must not be empty')
+    if (typeof address !== 'string') throw new Error('address must be type string')
+    if (await this.collection.countDocuments({ address: address }) > 0) return true
+    else return false
+  }
 }
 
 module.exports = Cameras
