@@ -7,7 +7,8 @@
     "start": "node index.js",
     "start:watch": "NODE_ENV=development nodemon index.js",
     "test": "NODE_ENV=test jest . --coverage --verbose",
-    "linter": "eslint ."
+    "linter": "eslint .",
+    "logs": "jv logs/events.log"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.1.0",
+    "json-log-viewer": "^0.1.2",
     "mongodb-memory-server": "^6.3.3",
     "nodemon": "^2.0.2",
     "supertest": "^4.0.2"
