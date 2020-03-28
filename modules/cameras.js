@@ -23,7 +23,15 @@ class Cameras {
   }
 
   async add (name, address) {
-    const data = await this.collection.insertOne({ name: name, address: address })
+    if (!name) throw new Error('name should not be empty')
+    if (!address) throw new Error('address should not be empty')
+    if (typeof name !== 'string') throw new Error('name should be type string')
+    if (await this.exists(address)) throw new Error('camera already exists')
+    const id = ObjectID()
+    try {
+      Cameras.streams.push(new Stream(id, name, address))
+    } catch (error) { throw new Error('Can not connect to camera') }
+    const data = await this.collection.insertOne({ _id: id, name: name, address: address })
     return data.insertedId
   }
 
