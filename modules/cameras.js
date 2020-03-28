@@ -1,13 +1,23 @@
 'use strict'
 
 /* IMPORT MODULES */
-const ObjectId = require('mongodb').ObjectID
+const ObjectID = require('mongodb').ObjectID
+const Stream = require('./stream')
+
+/* GLOBAL VARIABLES */
+const DEV_WEBCAM_NAME = 'Development Webcam'
+const DEV_WEBCAM_ADDRESS = 0
 
 class Cameras {
   constructor (db) {
     return (async () => {
       if (!db || typeof db.collection !== 'function') throw new Error('db should be mongodb db object')
       this.collection = db.collection('cameras')
+      if (!Cameras.streams) {
+        const cameras = await this.collection.find({}).toArray()
+        Cameras.streams = cameras.map(camera => new Stream(camera._id, camera.name, camera.address))
+        if (process.env.DEV_WEBCAM) Cameras.streams.push(new Stream(ObjectID(), DEV_WEBCAM_NAME, DEV_WEBCAM_ADDRESS))
+      }
       return this
     })()
   }
