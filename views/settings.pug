@@ -8,8 +8,11 @@ html(lang='en')
   body
     main
       h1 Settings
+      if error
+        .error#error
+          p=error.message
       .inline_button_container
-        h3 Cameras
+        h2 Cameras
         .inline_button_separator
         a.button.button_green(href='/camera/new') New
       for camera in streams
@@ -17,6 +20,19 @@ html(lang='en')
           h3=camera.name
           p=camera.address
           .button.button_red.stream_delete(data=camera.id, onclick='camera_remove.call(this)') X
+      h2 Password Reset
+      form(method='POST', action='/settings/password', autocomplete="off")
+        .group
+          input.textbox(type='password', name='currentPassword', required)
+          label(for="password") Current Password
+        .group
+          input.textbox(type='password', name='newPassword', required)
+          label(for="password") New Password
+        .group
+          input.textbox(type='password', name='confirmPassword', required)
+          label(for="password") Confirm New Password
+        .group
+          button.button.button_green(type='submit') Reset
   script.
     async function camera_remove() {
       const id = this.getAttribute('data')
