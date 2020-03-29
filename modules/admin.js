@@ -36,13 +36,16 @@ class Admin {
     else return admin._id.toHexString()
   }
 
-  async updatePassword (currentPassword, newPassword) {
+  async updatePassword (currentPassword, newPassword, confirmPassword) {
     if (!currentPassword) throw new Error('currentPassword can not be empty')
     if (!newPassword) throw new Error('newPassword can not be empty')
+    if (!confirmPassword) throw new Error('confirmPassword can not be empty')
     if (typeof currentPassword !== 'string') throw new Error('currentPassword must be type string')
     if (typeof newPassword !== 'string') throw new Error('newPassword must be type string')
+    if (typeof confirmPassword !== 'string') throw new Error('confirmPassword must be type string')
     const adminId = await this.login(currentPassword)
 
+    if (newPassword !== confirmPassword) throw new Error('new password must match confirm password')
     newPassword = await bcrypt.hash(newPassword, SALT_ROUNDS)
     await this.collection.updateOne({ _id: ObjectId(adminId) }, { $set: { password: newPassword } })
     return true
