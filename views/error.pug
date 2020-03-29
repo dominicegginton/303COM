@@ -1,0 +1,14 @@
+doctype html5
+html(lang='en')
+  include includes/head.pug
+  head
+    link(rel="stylesheet", href="/controls.css")
+    title 303COM - Error
+  body
+    main
+      h1 Error
+      if error
+        .error#error
+          p=error.message
+  script
+  
