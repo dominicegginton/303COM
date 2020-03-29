@@ -1,3 +1,5 @@
+@import includes/vars
+
 .stream_container
   position: relative
   margin: 20 0 20 0
@@ -11,3 +13,28 @@
     width: 100%
     height: auto
     border-radius: 20px
+
+.stream_details
+  margin: 20 0 20 0
+  background: $back-light
+  color: $text-dark
+  padding: 10 10 10 10
+  border-radius: 20px
+  position: relative
+  p
+    margin: 10 0 0 0
+  @media (prefers-color-scheme: dark)
+    background: $back-dark
+    .steam_details.h3 .stream_details.p
+      color: $text-light
+  .stream_delete
+    color: $text-dark
+    display: none
+    position: absolute
+    top: 20
+    right: 20
+    transform: translateY(-50%)
+    transition: all 0.1s ease-in-out
+.stream_details:hover
+  .stream_delete
+    display: inline-block
