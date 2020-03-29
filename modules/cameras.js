@@ -36,11 +36,10 @@ class Cameras {
   }
 
   async remove (id) {
-    if (id instanceof !ObjectID) throw new Error('id must be type MongoDB ObjectId')
-    Cameras.streams = Cameras.streams.filter(stream => { return stream.id !== id })
-    const data = await this.collection.deleteOne({ _id: ObjectID(id) })
-    if (data.result.n !== 1 || data.result.n !== 1) return false
-    return true
+    if (id instanceof ObjectID) {
+      Cameras.streams = Cameras.streams.filter(stream => { return !stream.id.equals(id) })
+      await this.collection.deleteOne({ _id: id })
+    } else throw new Error('id must be type MongoDB ObjectId')
   }
 
   async exists (address) {
