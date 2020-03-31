@@ -1,0 +1,20 @@
+doctype html5
+html(lang='en')
+  include includes/head.pug
+  head
+    title 303COM
+  body
+    main
+      h1 New Camera
+      if error
+        .error#error
+          p=error.message
+      form(method='POST', action='/camera/new', autocomplete="off")
+                .group
+                  input.textbox(type='text', name='name', required)
+                  label(for="name") Name
+                .group
+                  input.textbox(type='text', name='address', required)
+                  label(for="address") Address
+                .group
+                  button.button(type='submit') Connect
