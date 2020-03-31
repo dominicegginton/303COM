@@ -2,7 +2,26 @@ doctype html5
 html(lang='en')
   include includes/head.pug
   head
+    script(src = '/socket.io/socket.io.js')
+    link(rel="stylesheet", href="/camera.css")
     title 303COM
   body
     main
-      h1 303COM
+      include includes/banner.pug
+      h1 Home
+      if streams
+        for stream in streams
+          .stream_preview
+            h3=stream.name
+            img(id=stream.id src='')
+      script.
+        const socket = io.connect('http://localhost:3000')
+        const streams = !{JSON.stringify(streams)}
+        for (let i = 0; i < streams.length; i++) {
+          socket.on(`frame-data-${streams[i].id}`, (data) => {
+            if (data.frame) {
+              const imgTag = document.getElementById(streams[i].id)
+              imgTag.src = `data:image/jpeg;base64,${data.frame}`
+              }
+          })
+        }
