@@ -11,9 +11,12 @@ html(lang='en')
       h1 Home
       if streams
         for stream in streams
-          .stream_preview
-            h3=stream.name
-            img(id=stream.id src='')
+          a(href='/camera/details/'+stream.id)
+            .stream_preview
+              img.stream(id=stream.id src='')
+              .stream_preview_fade
+              .stream_preview_details
+                h3=stream.name
       script.
         const socket = io.connect('http://localhost:3000')
         const streams = !{JSON.stringify(streams)}

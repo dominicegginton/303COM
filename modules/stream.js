@@ -10,7 +10,7 @@ class Stream {
     try {
       this.capture = new cv.VideoCapture(this.address)
       this.capture.set(cv.CAP_PROP_FRAME_WIDTH, 640)
-      this.capture.set(cv.CAP_PROP_FRAME_HEIGHT, 360)
+      this.capture.set(cv.CAP_PROP_FRAME_HEIGHT, 480)
     } catch (error) {
       if (error === 'VideoCapture::New - failed to open capture') throw Error('can not connected to camera')
     }
