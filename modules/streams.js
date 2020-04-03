@@ -4,9 +4,9 @@
 const Cameras = require('../modules/cameras')
 const socketIOProvider = require('socket.io')
 
-const streams = async (server, db, logger) => {
-  const io = socketIOProvider(server)
-  await new Cameras(db)
+const streams = async (db, logger) => {
+  await new Cameras(db, logger)
+  const socketStream = new SocketStream()
 
   setInterval(async () => {
     for (let i = 0; i < Cameras.streams.length; i++) {
