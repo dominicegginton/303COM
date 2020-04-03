@@ -47,7 +47,7 @@ class Stream {
     } else if (this.currentEvent) {
       // end event
       this.currentEvent.endTime = time()
-      this.logger.info('Event Completed', { id: this.id, name: this.name, address: this.address, event: this.currentEvent})
+      this.logger.info('Event Completed', { id: this.id, name: this.name, address: this.address, event: this.currentEvent })
       this.events.unshift(this.currentEvent)
       this.currentEvent = null
     }
