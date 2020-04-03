@@ -1,0 +1,36 @@
+@import includes/vars
+
+.event
+  vertical-align: middle
+  margin: 20 0 20 0
+  height: $event_hight
+  user-select: none
+  .event_icon
+    display: inline-block
+    vertical-align: middle
+    width: $event_hight
+    height: $event_hight
+    border-radius: 20px
+  .event_time
+    display: inline-block
+    vertical-align: middle
+    height: $event_hight
+    opacity: 0.6
+    margin: 0 20 0 20
+  .event_message
+    display: inline-block
+    vertical-align: middle
+    height: $event_hight
+
+.event_preview
+  color: $text-dark
+
+.motion
+  .event_icon
+    background: $blue
+.safe
+  .event_icon
+    background: $green
+.threat
+  .event_icon
+    background: $red
