@@ -1,0 +1,17 @@
+script.
+  const createEvent = event => {
+    const event_preview = document.createElement('div')
+    event_preview.classList.add('event', event.type)
+    const event_icon = document.createElement('div')
+    event_icon.classList.add('event_icon')
+    const event_time = document.createElement('div')
+    event_time.classList.add('event_time')
+    event_time.innerHTML = `${event.startTime} - ${event.endTime}`
+    const event_message = document.createElement('div')
+    event_message.classList.add('event_message')
+    event_message.innerHTML = `${event.message}`
+    event_preview.appendChild(event_icon)
+    event_preview.appendChild(event_time)
+    event_preview.appendChild(event_message)
+    return event_preview
+  }
