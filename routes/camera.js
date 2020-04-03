@@ -10,10 +10,11 @@ const router = new Router()
 
 router.get('/camera/details/:id', async ctx => {
   if (ctx.session.authenticated === true) {
-    await new Cameras(ctx.db)
+    await new Cameras(ctx.db, ctx.logger)
     const camera = Cameras.streams.find(stream => stream.id.equals(ObjectID(ctx.params.id)))
     if (!camera) {
-      ctx.render('error', { authenticated: true, error: { message: 'camera id not found' } })
+      await ctx.render('error', { authenticated: true, error: { message: 'camera id not found' } })
+      return
     }
     await ctx.render('camera', { authenticated: true, camera: camera })
   } else ctx.redirect('/login')
@@ -29,7 +30,7 @@ router.post('/camera/new', async ctx => {
   if (ctx.session.authenticated === true) {
     try {
       const data = ctx.request.body
-      const cameras = await new Cameras(ctx.db)
+      const cameras = await new Cameras(ctx.db, ctx.logger)
       await cameras.add(data.name, data.address)
       ctx.redirect('/')
     } catch (error) {

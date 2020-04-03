@@ -13,7 +13,8 @@ const bodyParser = require('koa-bodyparser')
 const http = require('http')
 const MongoClient = require('mongodb').MongoClient
 const logger = require('./modules/logger')
-const streams = require('./modules/streams')
+const SocketStream = require('./modules/socketStream')
+const CameraStream = require('./modules/cameraStream')
 
 /* IMPORT ROUTERS */
 const homeRouter = require('./routes/home')
@@ -60,8 +61,11 @@ app.use(cameraRouter.allowedMethods())
   app.context.logger.info('Database connected', { db_url: DATABASE_URL, db_port: DATABASE_PORT })
   // attach database to app
   app.context.db = client.db('303COM')
+  // setup socket stream
+  // eslint-disable-next-line no-new
+  new SocketStream(app.server)
   // start streaming cameras
-  streams(app.server, app.context.db, app.context.logger)
+  CameraStream(app.context.db, app.context.logger)
   app.context.logger.info('Camera streams started')
   // start http server
   app.server.listen(PORT, async () => app.context.logger.info('Server listening', { port: PORT }))

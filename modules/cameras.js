@@ -9,14 +9,15 @@ const DEV_WEBCAM_NAME = 'Development Webcam'
 const DEV_WEBCAM_ADDRESS = 0
 
 class Cameras {
-  constructor (db) {
+  constructor (db, logger) {
     return (async () => {
       if (!db || typeof db.collection !== 'function') throw new Error('db should be mongodb db object')
       this.collection = db.collection('cameras')
+      this.logger = logger
       if (!Cameras.streams) {
         const cameras = await this.collection.find({}).toArray()
-        Cameras.streams = cameras.map(camera => new Stream(camera._id, camera.name, camera.address))
-        if (process.env.DEV_WEBCAM) Cameras.streams.push(new Stream(ObjectID(), DEV_WEBCAM_NAME, DEV_WEBCAM_ADDRESS))
+        Cameras.streams = cameras.map(camera => new Stream(camera._id, camera.name, camera.address, this.logger))
+        if (process.env.DEV_WEBCAM) Cameras.streams.push(new Stream(ObjectID(), DEV_WEBCAM_NAME, DEV_WEBCAM_ADDRESS, this.logger))
       }
       return this
     })()
@@ -29,7 +30,7 @@ class Cameras {
     if (await this.exists(address)) throw new Error('camera already exists')
     const id = ObjectID()
     try {
-      Cameras.streams.push(new Stream(id, name, address))
+      Cameras.streams.push(new Stream(id, name, address, this.logger))
     } catch (error) { throw new Error('Can not connect to camera') }
     const data = await this.collection.insertOne({ _id: id, name: name, address: address })
     return data.insertedId
