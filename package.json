@@ -8,7 +8,8 @@
     "start:watch": "NODE_ENV=development nodemon index.js",
     "test": "NODE_ENV=test jest . --coverage --verbose",
     "linter": "eslint .",
-    "logs": "jv logs/events.log"
+    "logs:view": "jv logs/events.log",
+    "logs:clear": "rm logs/events.log"
   },
   "repository": {
     "type": "git",
