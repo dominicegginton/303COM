@@ -63,6 +63,25 @@ form
       font-size: 0.8rem
       @media screen and (max-width: $page_width)
         top: -15
+  .file
+    outline: none
+    opacity: 0
+    z-index: 100
+    cursor: pointer
+  .file_name
+    padding: 0 0 0 5
+    position: absolute
+    top: 5
+    z-index: -100
+  .file:valid
+    ~ .fileName
+      opacity: 0.5
+    ~ label
+      top: -25
+      opacity: 1
+      font-size: 0.8rem
+      @media screen and (max-width: $page_width)
+        top: -15
 
 .button
   padding: 0 0 0 0
