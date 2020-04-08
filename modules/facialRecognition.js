@@ -60,8 +60,8 @@ class FacialRecognition {
     if (id instanceof ObjectID) {
       let face = await this.collection.find({ _id: id }).toArray()
       face = face[0]
-      FacialRecognition.descriptors = FacialRecognition.descriptors.filter(descriptor => { 
-        return descriptor._label !== face.name 
+      FacialRecognition.descriptors = FacialRecognition.descriptors.filter(descriptor => {
+        return descriptor._label !== face.name
       })
       if (FacialRecognition.descriptors.length === 0) FacialRecognition.faceMatcher = null
       else FacialRecognition.faceMatcher = new faceapi.FaceMatcher(FacialRecognition.descriptors)
