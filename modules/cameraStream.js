@@ -15,7 +15,7 @@ const cameraStream = async (db, logger) => {
       socketStream.emitFrame(stream.id, frame)
       socketStream.emitEvent(stream.id, stream.currentEvent, stream.events)
     }
-  }, process.env.FPS || 10000 / 30)
+  }, process.env.FPS || 10000 / 15)
 }
 
 module.exports = cameraStream

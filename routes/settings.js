@@ -4,6 +4,7 @@
 const Router = require('@koa/router')
 const Cameras = require('../modules/cameras')
 const Admin = require('../modules/admin')
+const FacialRecognition = require('../modules/facialRecognition')
 
 /* SETUP ROUTER */
 const router = new Router()
@@ -11,7 +12,9 @@ const router = new Router()
 router.get('/settings', async ctx => {
   if (ctx.session.authenticated === true) {
     await new Cameras(ctx.db)
-    await ctx.render('settings', { authenticated: true, streams: Cameras.streams })
+    const facialRecognition = await new FacialRecognition(ctx.db)
+    const faces = await facialRecognition.getFaces()
+    await ctx.render('settings', { authenticated: true, streams: Cameras.streams, faces: faces })
   } else ctx.redirect('/login')
 })
 

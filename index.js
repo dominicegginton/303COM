@@ -8,6 +8,7 @@ const views = require('koa-views')
 const serve = require('koa-static')
 const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
+const body = require('koa-body')
 
 /* IMPORT MODULES */
 const http = require('http')
@@ -21,6 +22,7 @@ const homeRouter = require('./routes/home')
 const authenticationRouter = require('./routes/authentication')
 const settingsRouter = require('./routes/settings')
 const cameraRouter = require('./routes/camera')
+const faceRouter = require('./routes/face')
 
 /* GLOBAL VARS */
 const DATABASE_URL = 'localhost' || process.env.DATABASE_URL
@@ -40,6 +42,7 @@ app.use(session({
   rolling: true,
   renew: true
 }, app))
+app.use(body({ multipart: true }))
 app.use(bodyParser())
 
 /* SETUP ROUTERS */
@@ -51,6 +54,8 @@ app.use(settingsRouter.routes())
 app.use(settingsRouter.allowedMethods())
 app.use(cameraRouter.routes())
 app.use(cameraRouter.allowedMethods())
+app.use(faceRouter.routes())
+app.use(faceRouter.allowedMethods())
 
 /* SETUP APP */
 ;(async () => {
