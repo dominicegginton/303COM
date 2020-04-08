@@ -1,0 +1,28 @@
+doctype html5
+html(lang='en')
+  include includes/head.pug
+  head
+    title 303COM
+  body
+    main
+      include includes/banner.pug
+      h1 New Face
+      if error
+        .error#error
+          p=error.message
+      form(method='POST', action='/face/new', enctype="multipart/form-data", autocomplete="off")
+        .group
+          input.textbox(type='text', name='name', required)
+          label(for="name") Name
+        .group
+          input.file(type='file', name='faceImage', onchange='updateFileName.call(this)', required)
+          p.file_name#file_name
+          label(for="faceImage") Upload Face Image
+        .group
+          button.button.button_green(type='submit') Add Person
+  script.
+    function updateFileName() {
+      const file = this.value
+      const fileName = file.split('\\')
+      document.getElementById('file_name').innerHTML = fileName[fileName.length - 1]
+    }
