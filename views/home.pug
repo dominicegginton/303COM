@@ -1,0 +1,42 @@
+doctype html5
+html(lang='en')
+  include includes/head.pug
+  head
+    script(src = '/socket.io/socket.io.js')
+    link(rel="stylesheet", href="/camera.css")
+    link(rel="stylesheet", href="/event.css")
+    title 303COM
+  body
+    main
+      include includes/banner.pug
+      h1 Home
+      if streams
+        for stream in streams
+          a(href='/camera/details/'+stream.id)
+            .stream_container(id=stream.id)
+              img.stream.preview(src='')
+              .stream_preview_fade
+              .stream_preview_details
+                h3=stream.name
+      include includes/createEvent.pug
+      script.
+        const socket = io.connect('http://localhost:3000')
+        socket.on('frame-data', data => {
+          let streamContainer = document.getElementById(data.streamId)
+          let stream = null
+          if (streamContainer) stream = streamContainer.querySelectorAll('.stream')[0]
+          if (stream) stream.src = `data:image/jpeg;base64,${data.frame}`
+        })
+        socket.on('event-data', data => {
+          const streamContainer = document.getElementById(data.streamId)
+          let streamDetails = null
+          if (streamContainer) streamDetails = streamContainer.querySelectorAll('.stream_preview_details')[0]
+          let event = null
+          if (streamDetails) event = streamDetails.querySelectorAll('.event')[0]
+          if (event) streamDetails.removeChild(event)
+          if (data.currentEvent) {
+            const newEvent = createEvent(data.currentEvent)
+            newEvent.classList.add('event_preview')
+            streamDetails.appendChild(newEvent)
+          }
+        })

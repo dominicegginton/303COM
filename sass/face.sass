@@ -1,0 +1,51 @@
+@import includes/vars
+
+.face_container
+  margin: 20 0 20 0
+  background: $back-light
+  color: $text-dark
+  padding: 20 20 20 20
+  border-radius: 20px
+  position: relative
+  p
+    margin: 10 0 0 0
+  @media (prefers-color-scheme: dark)
+    background: $back-dark
+    .face_container.h3 .face_container.p
+      color: $text-light
+  .face_delete
+    color: $text-dark
+    display: none
+    position: absolute
+    top: 30
+    right: 30
+    transform: translateY(-50%)
+    transition: all 0.1s ease-in-out
+.face_container:hover
+  .face_delete
+    display: inline-block
+
+.stream_details
+  margin: 20 0 20 0
+  background: $back-light
+  color: $text-dark
+  padding: 20 20 20 20
+  border-radius: 20px
+  position: relative
+  p
+    margin: 10 0 0 0
+  @media (prefers-color-scheme: dark)
+    background: $back-dark
+    .steam_details.h3 .stream_details.p
+      color: $text-light
+  .stream_delete
+    color: $text-dark
+    display: none
+    position: absolute
+    top: 30
+    right: 30
+    transform: translateY(-50%)
+    transition: all 0.1s ease-in-out
+.stream_details:hover
+  .stream_delete
+    display: inline-block

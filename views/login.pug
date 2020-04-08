@@ -1,0 +1,21 @@
+doctype html5
+html(lang='en')
+  include includes/head.pug
+  head
+    link(rel="stylesheet", href="/controls.css")
+    title 303COM - Login
+  body
+    main
+      include includes/banner.pug
+      h1 Login
+      if error
+        .error#error
+          p=error.message
+      form(method='POST', action='/login', autocomplete="off")
+        .group
+          input.textbox(type='password', name='password', required)
+          label(for="password") Password
+        .group
+          button.button.button_green(type='submit') Login
+  script
+  

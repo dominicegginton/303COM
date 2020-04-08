@@ -1,0 +1,53 @@
+@import includes/vars
+@import includes/text
+
+html
+  zoom: 100%
+  background: $background-light
+  @media (prefers-color-scheme: dark)
+    background:  $background-dark
+
+body
+  margin: 0 0 100 0
+
+main
+  display: block
+  width: 100%
+  max-width: $page_width
+  margin: 0 0 0 0
+  position: relative
+  left: 50%
+  transform: translateX(-50%)
+  @media screen and (max-width: $page_width + 80)
+    left: unset
+    transform: unset
+    margin: 0 0 0 0
+    max-width: $page_width - 100
+    padding: 0 50 0 50
+    min-width: unset
+    width: unset
+
+.error
+	margin: 40 0 0 0
+
+.banner_container
+  margin: 20 0 20 0
+  img
+    width: $icon_width
+  .banner_controls
+    float: right
+    height: $icon_width
+    .banner_controls_separator
+      display: inline-block
+      position: relative
+      top: 50%
+      transform: translateY(-50%)
+      margin: 0 20 0 20
+    .banner_controls_separator:before
+      content: '/'
+    .banner_controls_control
+      display: inline-block
+      position: relative
+      top: 50%
+      transform: translateY(-50%)
+      margin: 0 20 0 20

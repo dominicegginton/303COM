@@ -1,0 +1,10 @@
+.banner_container
+  a(href='/')
+    img(src="/favicon.ico")
+  if authenticated
+    .banner_controls
+      .banner_controls_control
+        a.button.button_green(href='/settings') Settings
+      .banner_controls_separator
+      .banner_controls_control
+        a.button.button_red(href='/logout') Logout

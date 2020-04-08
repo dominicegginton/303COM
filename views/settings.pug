@@ -1,0 +1,57 @@
+doctype html5
+html(lang='en')
+  include includes/head.pug
+  head
+    title 303COM - Settings
+    link(rel="stylesheet", href="/camera.css")
+    link(rel="stylesheet", href="/face.css")
+    link(rel="stylesheet", href="/controls.css")
+  body
+    main
+      include includes/banner.pug
+      h1 Settings
+      if error
+        .error#error
+          p=error.message
+      .inline_button_container
+        h2 Cameras
+        .inline_button_separator
+        a.button.button_green(href='/camera/new') New
+      for camera in streams
+        .stream_details
+          h3=camera.name
+          p=camera.address
+          .button.button_red.stream_delete(data=camera.id, onclick='camera_remove.call(this)') X
+      .inline_button_container
+        h2 Faces
+        .inline_button_separator
+        a.button.button_green(href='/face/new') New
+      for face in faces
+        .face_container
+          h3=face.name
+          .button.button_red.face_delete(data=face._id, onclick='face_remove.call(this)') X
+      h2 Password Reset
+      form(method='POST', action='/settings/password', autocomplete="off")
+        .group
+          input.textbox(type='password', name='currentPassword', required)
+          label(for="password") Current Password
+        .group
+          input.textbox(type='password', name='newPassword', required)
+          label(for="password") New Password
+        .group
+          input.textbox(type='password', name='confirmPassword', required)
+          label(for="password") Confirm New Password
+        .group
+          button.button.button_green(type='submit') Reset
+  script.
+    async function camera_remove() {
+      const id = this.getAttribute('data')
+      const response = await fetch('/camera/remove', { method: 'POST', body: JSON.stringify({ id: id }), headers: { 'Content-Type': 'application/json' } })
+      if (response.ok && response.redirected) window.location.replace(response.url)
+    }
+    
+    async function face_remove() {
+      const id = this.getAttribute('data')
+      const response = await fetch('/face/remove', { method: 'POST', body: JSON.stringify({ id: id }), headers: { 'Content-Type': 'application/json' } })
+      if (response.ok && response.redirected) window.location.replace(response.url)
+    }

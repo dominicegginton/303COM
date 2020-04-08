@@ -1,0 +1,36 @@
+doctype html5
+html(lang='en')
+  include includes/head.pug
+  head
+    script(src = '/socket.io/socket.io.js')
+    link(rel="stylesheet", href="/camera.css")
+    link(rel="stylesheet", href="/event.css")
+    title 303COM
+  body
+    main
+      include includes/banner.pug
+      h1=camera.name
+      .stream_container(id=camera.id)
+        img.stream(src='')
+        .events
+      include includes/createEvent.pug
+      script.
+        const socket = io.connect('http://localhost:3000')
+        socket.on('frame-data', data => {
+          let streamContainer = document.getElementById(data.streamId)
+          let stream = null
+          if (streamContainer) stream = streamContainer.querySelectorAll('.stream')[0]
+          if (stream) stream.src = `data:image/jpeg;base64,${data.frame}`
+        })
+        socket.on('event-data', data => {
+          const streamContainer = document.getElementById(data.streamId)
+          let eventsContainer = null
+          if (streamContainer) eventsContainer = streamContainer.querySelectorAll('.events')[0]
+          if (eventsContainer) {
+            eventsContainer.innerHTML = ''
+            if (data.currentEvent) eventsContainer.appendChild(createEvent(data.currentEvent))
+            data.events.forEach(event => {
+              eventsContainer.appendChild(createEvent(event))
+            })
+          }
+        })
