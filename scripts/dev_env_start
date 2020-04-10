@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NODE_ENV=development
+
+trap remove_dev_env_db INT
+
+function remove_dev_env_db() {
+	echo ``
+	echo '> Removing Database 303COM_dev_env_db_mongo'
+	docker stop 303COM_dev_env_db_mongo
+	docker rm 303COM_dev_env_db_mongo
+
+	exit
+}
+
+echo '> Creating Database volume 303COM_dev_env_db'
+docker volume create 303COM_dev_env_db
+
+
+echo '> Starting Database 303COM_dev_env_db_mongo'
+docker run --name 303COM_dev_env_db_mongo -v 303COM_dev_env_db:/data/db -p 27017:27017/tcp -d mongo:latest
+
+echo '> Starting Development Node.js Server with nodemon'
+nodemon index.js

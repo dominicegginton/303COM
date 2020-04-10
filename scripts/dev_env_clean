@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo '> Attempting to remove Database 303COM_dev_env_db_mongo'
+docker stop 303COM_dev_env_db_mongo
+docker rm 303COM_dev_env_db_mongo
+
+echo '> Attempting to remove Volume 303COM_dev_env_db'
+docker volume rm 303COM_dev_env_db
