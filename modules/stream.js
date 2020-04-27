@@ -57,7 +57,7 @@ class Stream {
         if (recognizedFaces.length > 0) {
           // create safe event
           this.currentEvent.type = 'safe'
-          this.currentEvent.message = ''
+          this.currentEvent.message = 'Safe'
         } else {
           // threat detected
           if (this.currentEvent.type !== 'safe') {
