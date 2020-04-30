@@ -1,10 +1,10 @@
 {
   "name": "303com",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A smart home security system 🔒🎥",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "./scripts/env_start",
     "start:dev": "./scripts/dev_env_start",
     "start:dev:webcam": "DEV_WEBCAM=true npm run start:dev",
     "clean:dev": "./scripts/dev_env_clean",
