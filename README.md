@@ -3,7 +3,7 @@
   <h3 align="center">303COM Personal Project</h3>
   <p align="center">:lock: A modern home security system capable of real-time threat detection<p>
   <br>
-  <img width="460" align="center" src="https://github.coventry.ac.uk/raw/eggintod/303COM/release_0.1.0/assets/demo.png">
+  <img width="460" align="center" src="https://github.coventry.ac.uk/raw/eggintod/303COM/master/assets/demo.png">
 </div>
 
 ## Research Question
