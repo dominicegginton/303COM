@@ -36,7 +36,7 @@
     "@koa/router": "^8.0.8",
     "@tensorflow/tfjs-node": "^1.7.2",
     "@tensorflow/tfjs-node-gpu": "^1.7.2",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "canvas": "^2.6.1",
     "face-api.js": "^0.22.2",
     "fs-extra": "^8.1.0",
