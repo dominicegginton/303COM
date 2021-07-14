@@ -2,6 +2,8 @@
 	<img width="70" src="https://github.coventry.ac.uk/raw/eggintod/303COM/master/assets/logo.png">
   <h3 align="center">303COM Personal Project</h3>
   <p align="center">:lock: A modern home security system capable of real-time threat detection<p>
+  <b align="center">This project was built for as part of my diseration, it is now archived as I no longer provide support or updates</b>
+  <br>
   <br>
   <img width="460" align="center" src="https://github.coventry.ac.uk/raw/eggintod/303COM/master/assets/demo.png">
 </div>
